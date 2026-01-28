@@ -4,50 +4,16 @@
 }
 
 body {
-    display: flex;
-    align-items: center;
     width: 100%;
     height: 100vh;
     background: #fafcf3;
     overflow: hidden;
 }
 
-.main-container {
-    display: flex;
-    flex-direction: row;
-}
-
-.aside-nav-container {
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.aside-nav-container {
-    width: 260px;
-    max-width: 260px;
-    background: #FFF;
-    align-items: center;
+.row {
     height: 100vh;
-    box-shadow: 10px 0 15px -10px rgba(25, 25, 25, 0.25);
-}
-/*where the nav-links live*/
-.nav-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;   
 }
 
-.rooms {
-    align-items: center;
-}
-
-.rooms ul {
-    background: red;
-    text-decoration: none;
-}
-
-ul li {
-    text-decoration: none;
+#navLinkContainer {
+    white-space: no-wrap;
 }
