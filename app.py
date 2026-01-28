@@ -1,25 +1,25 @@
-#import asyncio
-from flask import Flask, jsonify, request, render_template
-from flask_socketio import SocketIO, emit, send
-#import websockets
+import os
+import random
+import logging
+from typing import Dict
+from datetime import datetime
+from string import ascii_uppercase, ascii_lowercase
+
+from flask import Flask, flash, jsonify, redirect, render_template, request  
+from flask_socketio import SocketIO, emit, send, join_room, leave_room
+
+
 
 app = Flask(__name__)
 
-app.secret_key = "dev_secret_key"
+app.secret_key = "M0jsib73-009naIne-8nwTjm3"
 app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_TYPE'] = "filesystem"
-# init
+# socket
 socket = SocketIO(app, cors_allowed_origins="*")
 
 
-@socket.on('/chat', namespace='chatApp')
-def custom_handler(message):
-    print(f'Received: {message}')
-    if message != 'User is connected':
-        send(message, broadcast=True)
-
-
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['POST', 'GET'])
 def index():
     return render_template('index.html')
 
