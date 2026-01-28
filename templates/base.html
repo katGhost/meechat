@@ -1,39 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %} - MeeChat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{% block head_description %}{% endblock %}">
     <meta name="author" content="{% block head_author %}{% endblock %}">
     <!--Styles -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
     {% block extrahead %}{% endblock %}
-  </head>
-  <body>
-    <main class="container">
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      <div id="messages">                                                       
-        {% for category, message in messages %}                                           
-        <div class="alert alert-#">                            
-          <a class="close" data-dismiss="alert">&times;</a>                     
-          <strong>{{ message }}</strong>                                        
-        </div>                                                                  
-        {% endfor %}                                                            
-      </div>
-      {% endwith %}
+</head>
 
-      {% block content %}{% endblock %}
-    </main>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 cl-sm-3 col-xl-2 bg-dark">
+                <nav class="navbar bg-dark border-bottom border-body mb-3" data-bs-theme="dark">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">
+                            <i class="bi bi-calendar2-heart-fill"></i><span class="d-none d-sm-inline ms-2">MeeChat</span>
+                        </a>
+                    </div>
+                </nav>
 
+                <!-- Vertical alignmetnt -->
+                <div class="sticky-top">
+                    <nav class="nav flex-column" id="navLinkContainer">
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-hash"></i><span class="d-none d-sm-inline ms-2">Room 1</span>
+                        </a>
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-hash"></i><span class="d-none d-sm-inline ms-2">Room 2</span>
+                        </a>
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-hash"></i><span class="d-none d-sm-inline ms-2">Room 3</span>
+                        </a>
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-hash"></i><span class="d-none d-sm-inline ms-2">Room 4</span>
+                        </a>
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-hash"></i><span class="d-none d-sm-inline ms-2">Room 5</span>
+                        </a>
+
+                        <!-- Notifications and other links -->
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-bell"></i><span class="d-none d-sm-inline ms-2">Notifications</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-10 cl-sm-9 col-xl-10 p-0 m-0">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
+                    <div class="container-fluid">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
     <!-- Javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js" integrity="sha512-eVL5Lb9al9FzgR63gDs1MxcDS2wFu3loYAgjIH0+Hg38tCS8Ag62dwKyH+wzDb+QauDpEZjXbMn11blw8cbTJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"
+        integrity="sha512-eVL5Lb9al9FzgR63gDs1MxcDS2wFu3loYAgjIH0+Hg38tCS8Ag62dwKyH+wzDb+QauDpEZjXbMn11blw8cbTJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf-8">
-        $(document).ready(function() {
+        $(document).ready(function () {
             const socket = io.connect("http://127.0.0.1:5000");
 
             socket.on('connect', () => {
@@ -48,5 +92,17 @@
         })
     </script>
     {% block extrajs %}{% endblock %}
-  </body>
+</body>
+
 </html>
+
+<!-- {% with messages = get_flashed_messages(with_categories=true) %}
+<div id="messages">                                                       
+  {% for category, message in messages %}                                           
+  <div class="alert alert-#">                            
+    <a class="close" data-dismiss="alert">&times;</a>                     
+    <strong>{{ message }}</strong>                                        
+  </div>                                                                  
+  {% endfor %}                                                            
+</div>
+{% endwith %} -->

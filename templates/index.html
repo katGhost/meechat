@@ -3,55 +3,15 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
-    <div class="main-container">
-        <div class="aside-nav-container">
-            <div class="nav-wrapper">
-                <div class="search">
-                    <input id="room-search" class="room-search" />
-                    <button class="join-room-btn">Join</button>
-                </div>
-                <div class="rooms">
-                    <ul>
-                        <!-- Room -->
-                        <li class="nav-link-item">
-                            <div>
-                                <a href="room" class="room-btn">Room 1</a>
-                            </div>
-                        </li>
-                        <!-- Room -->
-                        <li class="nav-link-item">
-                            <div>
-                                <a href="room" class="room-btn">Room 1</a>
-                            </div>
-                        </li>
-                        <!-- Room -->
-                        <li class="nav-link-item">
-                            <div>
-                                <a href="room" class="room-btn">Room 2</a>
-                            </div>
-                        </li>
-                        <!-- Room -->
-                        <li class="nav-link-item">
-                            <div>
-                                <a href="room" class="room-btn">Room 3</a>
-                            </div>
-                        </li>
-                        <!-- Room -->
-                        <li class="nav-link-item">
-                            <div>
-                                <a href="room" class="room-btn">Room 4</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+    <div class="form-container">
+        <form method="POST" class="row g-2">
+            <div class="col-auto">
+                <label for="finding-rooms" class="visually-hidden">Enter Room Name | Code</label>
+                <input type="text" autocomplete required class="form-control-plaintext border" id="roomCode" placeholder="Avh0956xHD" value="">
             </div>
-            
-        </div>
-        <div class="room-container">
-            <h3>Room</h3>
-            <div class="room-chat">
-
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
             </div>
-        </div>
+        </form>
     </div>
 {% endblock %}
