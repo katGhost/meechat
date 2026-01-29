@@ -17,8 +17,8 @@
 
 <body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-2 cl-sm-3 col-xl-2 bg-dark">
+        <div class="row" id="main-container">
+            <div class="col-2 cl-sm-3 col-xl-2 bg-dark" id="main-nav-container">
                 <nav class="navbar bg-dark border-bottom border-body mb-3" data-bs-theme="dark">
                     <div class="container-fluid">
                         <a class="navbar-brand" href="#">
@@ -30,39 +30,40 @@
                 <!-- Vertical alignmetnt -->
                 <div class="sticky-top">
                     <nav class="nav flex-column" id="navLinkContainer">
-                        <a class="nav-link text-white" href="#">
-                            <i class="bi bi-hash"></i><span class="d-none d-sm-inline ms-2">Room 1</span>
-                        </a>
-                        <a class="nav-link text-white" href="#">
-                            <i class="bi bi-hash"></i><span class="d-none d-sm-inline ms-2">Room 2</span>
-                        </a>
-                        <a class="nav-link text-white" href="#">
-                            <i class="bi bi-hash"></i><span class="d-none d-sm-inline ms-2">Room 3</span>
-                        </a>
-                        <a class="nav-link text-white" href="#">
-                            <i class="bi bi-hash"></i><span class="d-none d-sm-inline ms-2">Room 4</span>
-                        </a>
-                        <a class="nav-link text-white" href="#">
-                            <i class="bi bi-hash"></i><span class="d-none d-sm-inline ms-2">Room 5</span>
-                        </a>
+                        <div class="rooms-list">
+                            <h3 class="rooms-title mb-3">Rooms</h3>
+                            {% for room in rooms %}
+                            <a class="nav-link text-white bg-primary" href="#">
+                                <i class="bi bi-people"></i><span class="d-none d-sm-inline ms-2">{{ room }}</span>
+                            </a>
+                            {% endfor %}
+                            <!-- <a class="nav-link text-white" href="#">
+                                <i class="bi bi-people"></i><span class="d-none d-sm-inline ms-2">{{ room }}</span>
+                            </a>
+                            <a class="nav-link text-white" href="#">
+                                <i class="bi bi-people"></i><span class="d-none d-sm-inline ms-2">{{ room }}</span>
+                            </a>
+                            <a class="nav-link text-white" href="#">
+                                <i class="bi bi-people"></i><span class="d-none d-sm-inline ms-2">{{ room }}</span>
+                            </a> 
+                            <a class="nav-link text-white" href="#">
+                                <i class="bi bi-people"></i><span class="d-none d-sm-inline ms-2">{{ room }}</span>
+                            </a> -->
+                            
 
+                        </div>
+                        
                         <!-- Notifications and other links -->
                         <a class="nav-link text-white" href="#">
                             <i class="bi bi-bell"></i><span class="d-none d-sm-inline ms-2">Notifications</span>
+                        </a>
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-box-arrow-left"></i><span class="d-none d-sm-inline ms-2">Logout</span>
                         </a>
                     </nav>
                 </div>
             </div>
             <div class="col-10 cl-sm-9 col-xl-10 p-0 m-0">
-                <nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
-                    <div class="container-fluid">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
                 {% block content %}{% endblock %}
             </div>
         </div>
@@ -105,4 +106,15 @@
   </div>                                                                  
   {% endfor %}                                                            
 </div>
+
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
+                    <div class="container-fluid">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
 {% endwith %} -->
