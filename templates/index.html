@@ -3,15 +3,23 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
-    <div class="form-container">
-        <form method="POST" class="row g-2">
-            <div class="col-auto">
-                <label for="finding-rooms" class="visually-hidden">Enter Room Name | Code</label>
-                <input type="text" autocomplete required class="form-control-plaintext border" id="roomCode" placeholder="Avh0956xHD" value="">
+    <div class="main-rooms-container">
+        <div class="form-container">
+            <!-- rooms / form / controls -->
+        </div>
+
+        <div class="main-chat">
+            <div class="chat">
+            <!-- messages render here -->
             </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+
+            <div class="input-chat d-flex justify-content-end">
+                <input type="text" placeholder="Type a message..." />
+                <button class="btn btn-primary send" id="send-btn">send</button>
             </div>
-        </form>
+        </div>
     </div>
+
+
+
 {% endblock %}

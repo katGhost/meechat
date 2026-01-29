@@ -28,12 +28,12 @@
                 </nav>
 
                 <!-- Vertical alignmetnt -->
-                <div class="sticky-top">
-                    <nav class="nav flex-column" id="navLinkContainer">
+                <div class="sticky-top" id="nav-top">
+                    <nav av class="nav flex-column" id="navLinkContainer">
                         <div class="rooms-list">
                             <h3 class="rooms-title mb-3">Rooms</h3>
                             {% for room in rooms %}
-                            <a class="nav-link text-white bg-primary" href="#">
+                            <a id="room-item" class="nav-link text-white bg-dark" href="#">
                                 <i class="bi bi-people"></i><span class="d-none d-sm-inline ms-2">{{ room }}</span>
                             </a>
                             {% endfor %}

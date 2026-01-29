@@ -14,6 +14,84 @@ body {
     height: 100vh;
 }
 
+#main-nav-container {
+}
+
+#nav-top {
+    background-color: #789bc9;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
 #navLinkContainer {
     white-space: no-wrap;
+}
+
+#navLinkContainer a {
+    /* background: rgba(255, 150, 90, .9); */
+    margin-bottom: .75rem;
+    border-radius: 5px;
+}
+
+/* Full page wrapper */
+.main-rooms-container {
+  height: 100vh;
+  display: flex;
+  background-color: #f8f9fa; /* Bootstrap light */
+}
+
+/* Optional left panel / form area */
+/*.form-container {
+  width: 280px;
+  min-width: 250px;
+  border-right: 1px solid #dee2e6;
+  background-color: #ffffff;
+  padding: 1rem;
+  overflow-y: auto;
+}*/
+
+/* Main chat area */
+.main-chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #e9ecef;
+}
+
+/* Chat messages area */
+.chat {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  background-color: #f1f3f5;
+}
+
+/* Individual message example (future use) */
+.chat-message {
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  max-width: 75%;
+}
+
+/* Input area fixed to bottom */
+.input-chat {
+  border-top: 1px solid #dee2e6;
+  padding: 0.75rem;
+  background-color: #ffffff;
+}
+
+/* Input styling */
+.input-chat input,
+.input-chat textarea {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Prevent resize breaking layout */
+.input-chat textarea {
+  resize: none;
 }
