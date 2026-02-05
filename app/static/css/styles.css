@@ -35,7 +35,8 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 2rem 0;
+    margin: 4rem 0;
 }
 
 .hero {
@@ -118,6 +119,23 @@ html, body {
 
 #room-chat-section {
     background: rgba(250, 240, 246, 0.9)
+}
+
+
+@media (max-width: 768px) {
+  .dashboard {
+    margin: 2rem 0;
+    padding: 1rem 0;
+  }
+
+  #main-aside {
+    display: none;
+    transition: 0.4s ease-in-out;
+  }
+
+  .aside {
+    display: none;
+  }
 }
 
 
