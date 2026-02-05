@@ -13,4 +13,6 @@ dependencies = [
     "flask-jwt-extended==4.7.1",
     "flask-limiter==4.1.1",
     "sqlalchemy>=2.0.46",
+    "flask-bcrypt>=1.0.1",
+    "flask-migrate>=4.1.0",
 ]
