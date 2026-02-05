@@ -42,3 +42,13 @@ class Message(db.Model):
 
     user = db.relationship("User", back_populates="messages")
     room = db.relationship("Room", back_populates="messages")
+
+class CycleEntry(db.Model):
+    __tablename__ = "cycle_entries"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.integer, db.ForeignKey("users.id"), nullable=False)
+    start_date = db.Column(db.DateTime, nullable=False)
+    end_date = db.Column(db.DateTime, optional=True)
+    # json format symptoms
+    symptoms = db.Column(db.Text, nullable=True, optional=True)
