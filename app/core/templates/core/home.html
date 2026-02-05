@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <section class="hero">
+        <div class="header">
+            <h1>Hello!</h1>
+            <p class="text-muted">{{username}} 👋</p>
+            <div class="daily-insight mt-3">
+                <p>Today you may feel a little moody, communicate warmly 😊</p>
+            </div>
+        </div>
+        
+        <!-- dashboard widgets go here -->
+        
+        <div class="features">
+            <div class="card">
+                <div class="icon"><i class="fa-solid fa-bowl-food"></i></div>
+                <h3>Nutrition</h3>
+                <!-- <span>Watery fruits, hot chocolate and perhaps green-tea</span> -->
+            </div>
+
+            <div class="card">
+                <div class="icon"><i class="fa-solid fa-person-running"></i></div>
+                <h3>Exercise</h3>
+                <!-- <span>Launch in days, not months</span> -->
+            </div>
+
+            <div class="card">
+                <div class="icon"><i class="fa-solid fa-spa"></i></div>
+                <h3>Mindful Mediation</h3>
+                <!-- <span>Run where your data lives</span> -->
+            </div>
+
+            <div class="card">
+                <div class="icon"><i class="fa-solid fa-bed"></i></div>
+                <h3>Sleep</h3>
+                <!-- <span>Fully controlled and protected</span> -->
+            </div>
+        </div>
+
+        <!-- More suggestions ==> SCROLLABLE -->
+    </section> 
+</div>
+{% endblock %}
