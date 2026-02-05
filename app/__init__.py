@@ -2,7 +2,7 @@ from flask import Flask, g
 import logging
 from app.config import Config
 from werkzeug.middleware.proxy_fix import ProxyFix
-from app.extensions import socketio
+from app.extensions import socketio, migrate, bcrypt, db
 
 
 logging.basicConfig(
@@ -27,6 +27,8 @@ def create_app():
         logger=Config.DEBUG,
         engineio_logger=Config.DEBUG,
     )
+    
+    bcrypt.init_app(app)
 
     # Import and register blueprints
     from app.core import core
@@ -35,6 +37,8 @@ def create_app():
 
     app.register_blueprint(core, url_prefix='/')
     app.register_blueprint(chat, url_prefix='/chat')
+    
+    migrate.init_app(app, db)
 
     return app
 
