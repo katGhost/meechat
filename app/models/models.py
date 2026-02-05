@@ -10,7 +10,7 @@ class User(db.Model):
     password_hash = db.Column(db.String(255), nullable=True)
     google_id = db.Column(db.String(255), unique=True, nullable=True)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
 
     messages = db.relationship("Message", back_populates="user", lazy="dynamic")
 
@@ -19,3 +19,26 @@ class User(db.Model):
 
     def check_password(self, password: str) -> bool:
         return check_password_hash(self.password_hash, password)
+
+"""Room model representing chat-rooms."""
+class Room(db.Model):
+    __tablename__ = "rooms"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True, nullable=False)
+
+    messages = db.relationship("Message", back_populates="room", lazy="dynamic")
+
+"""Message model representing chat messages."""
+class Message(db.Model):
+    __tablename__ = "messages"
+
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    room_id = db.Column(db.Integer, db.ForeignKey("rooms.id"), nullable=False)
+
+    user = db.relationship("User", back_populates="messages")
+    room = db.relationship("Room", back_populates="messages")
