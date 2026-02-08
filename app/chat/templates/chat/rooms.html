@@ -9,69 +9,44 @@
         <h6 class="text-muted mb-3">Rooms</h6>
 
         <div class="list-group">
-            <!-- room list renders here -->
             {% for room in rooms %}
-            <a href="#" class="list-group-item list-group-item-action">
-                <i class="fa-solid fa-hashtag"></i> {{room}}
-            </a>
+            <div
+                class="room-item list-group-item list-group-item-action"
+                onclick="joinRoom('{{ room }}')">
+                <i class="fa-solid fa-hashtag"></i> {{ room }}
+            </div>
             {% endfor %}
+        </div>
+
+        <div class="active-users text-dark">
+            <h4>Active Users</h4>
+            <div id="active-users"></div>
         </div>
     </aside>
 
     <!-- Chat Area -->
-    <section class="flex-grow-1 d-flex flex-column" id="room-chat-section">
+    <section class="" id="room-chat-section">
+        <span id="username" class="d-none">
+            {{ session.get("username", "Guest") }}
+        </span>
 
         <!-- Messages -->
-        <div class="flex-grow-1 p-4 overflow-auto">
+        <div class="" id="chat">
             <!-- messages render here -->
         </div>
 
-        <!-- Input -->
-        <div class="border-top p-3 d-flex gap-2">
+        <!-- Input area -->
+        <div class="" id="input-area">
             <input
                 type="text"
                 class="form-control"
                 placeholder="Type a message..."
+                id="message"
+                onkeypress="handleKeyPress(event)"
             >
-            <button class="btn btn-primary px-4">send</button>
+            <button class="btn btn-primary px-4" onclick="sendMessage()">send</button>
         </div>
 
     </section>
 </div>
-{% endblock %}
-<!-- End contetn block -->
-{% block extrajs %}
-<script>
-    $(document).ready(function () {
-        const socket = io();
-        let currentRoom = "Introductions";
-        let username = document.getElementById('username').textContent;
-        let roomMessages = {};
-
-        // socket event listeners
-
-        // handle messages function
-        function addMessages(sender, message, type) {
-            if (!roomMessages[currentRoom]) {
-                roomMessages[currentRoom] = [];
-            }
-
-            roomMessages[currentRoom].push({sender, message, type});
-
-            const chat = document.getElementById('chat');
-        }
-
-        socket.on("connect", () => {
-            console.log("Connected to server");
-        });
-
-        socket.on("active_users", (data) => {
-            console.log("Active users:", data.users);
-        });
-
-        socket.on("status", (data) => {
-            console.log(data.msg);
-        });
-    })
-</script>
 {% endblock %}
