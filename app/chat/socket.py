@@ -1,15 +1,14 @@
-import logging
 from datetime import datetime
 from typing import Dict
 
-from flask import session, request, flash
+from flask import session, request
+from flask_socketio import emit, join_room, leave_room
+
 from app.extensions import socketio
-from flask_socketio import emit, join_room
 from app.config import Config
 from app import create_logger
 
 logger = create_logger()
-
 
 active_users: Dict[str, dict] = {}
 
@@ -17,92 +16,93 @@ active_users: Dict[str, dict] = {}
 @socketio.event
 def connect():
     username = session.get("username", "Guest")
-    active_users[request.sid] = {   #type: ignore
+
+    active_users[request.sid] = {
         "username": username,
-        "connected_at": datetime.now().isoformat(),
+        "room": None,
+        "connected_at": datetime.utcnow().isoformat(),
     }
 
-    emit(
-        "active_users",
-        {"users": [u["username"] for u in active_users.values()]},
-        broadcast=True,
-    )
-
+    emit_active_users()
     logger.info("User connected: %s", username)
 
 
 @socketio.event
 def disconnect():
-    user = active_users.pop(request.sid, None)      #type: ignore
+    user = active_users.pop(request.sid, None)
     if user:
-        emit(
-            "active_users",
-            {"users": [u["username"] for u in active_users.values()]},
-            broadcast=True,
-        )
+        emit_active_users()
         logger.info("User disconnected: %s", user["username"])
 
 
 @socketio.on("join")
-def join(data):
+def handle_join(data):
     room = data.get("room")
-    username = session.get("username")
+    username = session.get("username", "Guest")
 
-    if not room:
+    if room not in Config.CHAT_ROOMS:
         return
 
     join_room(room)
-    active_users[request.sid]["room"] = room    #type: ignore
+    active_users[request.sid]["room"] = room
 
     emit(
         "status",
+        {"msg": f"{username} joined {room}"},
+        to=room,
+    )
+
+
+@socketio.on("leave")
+def handle_leave(data):
+    room = data.get("room")
+    if room:
+        leave_room(room)
+
+
+@socketio.on("message")
+def handle_message(data):
+    username = session.get("username", "Guest")
+    message = data.get("msg", "").strip()
+
+    if not message:
+        return
+
+    timestamp = datetime.utcnow().isoformat()
+
+    if data.get("type") == "private_message":
+        target = data.get("target")
+        for sid, user in active_users.items():
+            if user["username"] == target:
+                emit(
+                    "private_message",
+                    {
+                        "msg": message,
+                        "from": username,
+                        "timestamp": timestamp,
+                    },
+                    to=sid,
+                )
+        return
+
+    room = data.get("room")
+    if room not in Config.CHAT_ROOMS:
+        return
+
+    emit(
+        "message",
         {
-            "msg": f"{username} joined {room}",
-            "type": "join",
-            "timestamp": datetime.now().isoformat(),
+            "msg": message,
+            "from": username,
+            "timestamp": timestamp,
         },
         to=room,
     )
 
 
-@socketio.event
-def handle_message(data: dict):
-    try:
-        username = session['username']
-        room = data.get('room ', "General")
-        msg_type = data.get('type', 'message')
-        message = data.get('msg', "").strip()
-
-        if not message:
-            return
-        
-        timestamp = datetime.now().isoformat()
-
-        if msg_type == 'private_message':
-            target_user = data.get('target')
-            
-            if not target_user:
-                return
-            
-            for sid, user_data in active_users.items():
-                if user_data['username'] == target_user:
-                    emit('private', {
-                        'msg': message,
-                        'from': username,
-                        'to': target_user,
-                        'timestamp': timestamp
-                    }, to=sid)
-        
-        else:
-            if room not in Config.CHAT_ROOMS:
-                return
-            
-            emit('message', {
-                'msg': message,
-                'from': username,
-                'timestamp': timestamp,
-                'type': msg_type
-            }, to=room)
-            
-    except Exception as e:
-        logger.error("Error handling message: %s", str(e))
+def emit_active_users():
+    emit(
+        "active_users",
+        {"users": [u["username"] for u in active_users.values()]},
+        broadcast=True,
+    )
